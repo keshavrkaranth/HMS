@@ -13,8 +13,7 @@ def username_changer(sender,instance,created,**kwargs):
         if tmp.username != tmp.username.upper():
             tmp.username = tmp.username.upper()
             tmp.save()
-        else:
-            pass
+
 
 
 @receiver(post_save,sender=Student)
