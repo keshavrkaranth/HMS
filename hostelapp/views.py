@@ -29,7 +29,7 @@ def student_registration(request):
             form = UserForm
             user = authenticate(
                 request,
-                username=data['username'],
+                username=data['username'].upper(),
                 password=data['password1']
             )
             if user is not None:
