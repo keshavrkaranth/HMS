@@ -1,4 +1,8 @@
 activating virtualenv:C:\Users\Keshav\Desktop\HostelManagement\testenv\Scripts\activate.bat
+nishanthk:
+    1.cd testenv\Scripts
+    2.activate.bat
+
 
 
 super user:
