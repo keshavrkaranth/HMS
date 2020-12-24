@@ -7,25 +7,24 @@ import datetime
 YEARS = [x for x in range(2000, 3000)]
 
 
-
-
 class UserForm(UserCreationForm):
     password1 = forms.CharField(
         min_length=8, max_length=30, widget=forms.PasswordInput(render_value=False))
 
     class Meta:
         model = User
-        fields = ['username','email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         help_texts = {
             'username': '''Same as Your <strong>USN</strong> in <strong>UPPER</strong> case'''
         }
         widgets = {
-            'username': forms.TextInput(attrs={'class':'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class':'form-control'}),
-            'password2':forms.PasswordInput(attrs={'class':'form-control'})
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'})
 
         }
+
         def clean_username(self):
             return self.cleaned_data['username'].upper()
 
@@ -91,6 +90,3 @@ class RepairForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = ['repair']
-
-
-

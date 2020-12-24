@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_warden = models.BooleanField(default=False)
 
-
+# trigger
 class Student(models.Model):
     BRANCHES = [('CS', 'Computer Science'), ('IS', 'Information Science'), ('EC', 'Electronics And Communication'),
                 ('EEE', 'Electrical And Electronics'), ('ME', 'Mecanical')]
@@ -93,6 +93,7 @@ class Warden(models.Model):
         null=True,
         on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
+    phoneno = models.CharField(max_length=12,default=None )
     hostel = models.ForeignKey('Hostel', default=None, null=True,
                                on_delete=models.CASCADE)
 
@@ -112,7 +113,7 @@ class Warden(models.Model):
 
         super(Warden, self).delete(*args, **kwargs)
 
-
+# stored procedure
 class Leave(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     start_date = models.DateField()

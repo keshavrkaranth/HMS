@@ -64,7 +64,7 @@ def student_after_registration(request):
 def user_login(request):
     context = ''
     if request.method=='POST':
-        username = request.POST.get('Username')
+        username = request.POST.get('Username').upper()
         password = request.POST.get('Password')
         user = authenticate(request,username = username,password = password)
         if user is not None:
@@ -165,7 +165,7 @@ def user_leave(request):
             start = form.cleaned_data['start_date']
             end = form.cleaned_data['end_date']
             delta = end-start
-            if delta.days >0 and (start-datetime.date.today()).days>=0:
+            if delta.days >=0 and (start-datetime.date.today()).days>=0:
                 usr_contr = Leave.objects.filter(
                     student=request.user.student,start_date__lte=end,end_date__gte=start
                 )
@@ -197,7 +197,25 @@ def user_leave(request):
 
 
 def maintainence(request):
-    pass
+    context = ''
+    form = RepairForm()
+    if request.method=='POST':
+        form = RepairForm(data=request.POST)
+        if form.is_valid() and request.user.student.room_allotted :
+            repair = form.cleaned_data['repair']
+            room  = request.user.student.room
+            room.repair = repair
+            room.save()
+            context = 'Complient Registered'
+            return redirect('hostelapp:student_profile')
+        elif not request.user.student.room_allotted:
+            return HttpResponse("Plz Select Room Before Registering Complient")
+
+    else:
+        form = RepairForm()
+    return render(request,'repair.html',{'form':form,'context':context})
+
+
 
 def Warden_add_room(request):
     pass

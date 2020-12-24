@@ -11,9 +11,8 @@ urlpatterns = [
     path('logout/',user_logout,name='logout'),
     path('student_profile/',student_profile,name='student_profile'),
     path('after_reg/',student_after_registration,name='after_reg'),
-    path('Room_maintenence/',maintainence,name='Room_maintenence'),
+    path('room_maintenence/',maintainence,name='room_maintenence'),
     path('warden_home/',warden_homepage,name='warden_home'),
     path('room_select/',select,name='room_select'),
     path('leave/',user_leave,name='leave'),
-
 ]
