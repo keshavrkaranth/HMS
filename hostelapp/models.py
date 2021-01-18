@@ -6,6 +6,8 @@ class User(AbstractUser):
     is_warden = models.BooleanField(default=False)
 
 # trigger
+
+
 class Student(models.Model):
     BRANCHES = [('CS', 'Computer Science'), ('IS', 'Information Science'), ('EC', 'Electronics And Communication'),
                 ('EEE', 'Electrical And Electronics'), ('ME', 'Mecanical')]
@@ -16,10 +18,10 @@ class Student(models.Model):
         on_delete=models.CASCADE)
     gender_choices = [('M', 'Male'), ('F', 'Female')]
     student_name = models.CharField(max_length=200, null=True)
-    student_mbl_no = models.PositiveIntegerField(default=None, null=True)
+    student_mbl_no = models.BigIntegerField(default=None, null=True)
     adress = models.CharField(max_length=256, default=None, null=True)
     father_name = models.CharField(max_length=200, null=True)
-    father_mbl_no = models.PositiveIntegerField(default=None, null=True)
+    father_mbl_no = models.BigIntegerField(default=None, null=True)
     USN = models.CharField(max_length=10, unique=True, null=True)
     Branch = models.CharField(max_length=4, choices=BRANCHES)
     dob = models.DateField(
@@ -30,7 +32,7 @@ class Student(models.Model):
         choices=gender_choices,
         max_length=1,
         default='N', null=True)
-    room = models.OneToOneField(
+    room = models.ForeignKey(
         'Room',
         blank=True,
         on_delete=models.SET_NULL,
@@ -38,23 +40,25 @@ class Student(models.Model):
     room_allotted = models.BooleanField(default=False)
     no_dues = models.BooleanField(default=True)
 
+
     def __str__(self):
         return str(self.student_name)
 
     def delete(self, *args, **kwargs):
         room_del = Room.objects.filter(student__room=self.room)
-        print('pppppppppppppppppppppppppppppppppppppppp')
         for s in room_del:
             s.vacant = True
             s.save()
-            print('***********')
         super(Student, self).delete(*args, **kwargs)
 
 
 class Room(models.Model):
-    room_choice = [('S', 'Single Occupancy'), ('D', 'Double Occupancy'), ]
-    no = models.CharField(max_length=5)
-    room_type = models.CharField(choices=room_choice, max_length=1, default=None)
+    room_choice = [('S', 'Single Occupancy'), ('D', 'Double Occupancy') ]
+    no = models.CharField(max_length=20)
+    room_type = models.CharField(
+        choices=room_choice, max_length=1, default=None)
+    max_no_of_persons = models.PositiveIntegerField(default=2)
+    current_no_of_persons = models.PositiveIntegerField(default=0,blank=True,null=True)
     vacant = models.BooleanField(default=False)
     hostel = models.ForeignKey('Hostel', on_delete=models.CASCADE)
     repair = models.CharField(max_length=100, blank=True)
@@ -64,12 +68,11 @@ class Room(models.Model):
 
     def delete(self, *args, **kwargs):
         stud = Student.objects.filter(room=self)
-        print('pppppppppppppppppppppppppppppppppppppppp')
         for s in stud:
             s.room_allotted = False
             s.save()
-            print('***********')
         super(Room, self).delete(*args, **kwargs)
+
 
 
 class Hostel(models.Model):
@@ -93,7 +96,7 @@ class Warden(models.Model):
         null=True,
         on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
-    phoneno = models.CharField(max_length=12,default=None )
+    phoneno = models.CharField(max_length=12, default=None,blank=True,null=True)
     hostel = models.ForeignKey('Hostel', default=None, null=True,
                                on_delete=models.CASCADE)
 
@@ -109,11 +112,12 @@ class Warden(models.Model):
     def delete(self, *args, **kwargs):
         self.user.is_warden = False
         self.user.save()
-        print('pppppppppppppppppppppppppppppppppppppppp')
 
         super(Warden, self).delete(*args, **kwargs)
 
 # stored procedure
+
+
 class Leave(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     start_date = models.DateField()
@@ -127,3 +131,6 @@ class Leave(models.Model):
         return f'{self.student.USN} '
 
 
+class created_date(models.Model):
+    user = models.CharField(max_length=20)
+    created_date = models.DateField()

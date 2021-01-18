@@ -1,103 +1,115 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-import datetime,calendar
+import datetime
+import calendar
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 
 
 def homepage(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
 
 
-def student_registration(request):
-    form = UserForm()
-    context = ''
-    if request.method=='POST':
-        form = UserForm(data=request.POST)
-
-
+def user_registration(request):
+    form = registrationForm()
+    if request.method == 'POST':
+        form = registrationForm(data=request.POST)
         if form.is_valid():
-
-            data = form.cleaned_data
-            new_user = form.save(commit=False)
-            new_user.save()
-            Student.objects.create(user=new_user)
-            form = UserForm
-            user = authenticate(
-                request,
-                username=data['username'].upper(),
-                password=data['password1']
-            )
-            if user is not None:
-                if user.is_active:
-                    login(request,user)
-                    return redirect("hostelapp:after_reg")
-                else:
-                    context = 'acc is in active'
-            else:
-                context = 'Disabled acc'
-
-        else:
-            form = UserForm()
-
-    return render(request,'signup.html',{'form':form,'message':context})
-
+            x = form.cleaned_data
+            y = User.objects.create(username=x['Username'].upper(
+            ), email=x['Email'], password=x['password'])
+            y.set_password(y.password)
+            y.save()
+            stu = Student.objects.create(user=y, student_name=x['Name'], student_mbl_no=x['Phone_no'], adress=x['Adress'], father_name=x[
+                                         'Father_name'], father_mbl_no=x['Father_mbl_no'], USN=x['USN'].upper(), Branch=x['Branch'], dob=x['DOB'], gender=x['Gender'])
+            stu.save()
+            auth = authenticate(
+                request, username=x['Username'].upper(), password=x['password'])
+            if auth is not None:
+                if auth.is_active:
+                    login(request, auth)
+                    return redirect('hostelapp:get_room')
+    return render(request, 'signup.html', {'form': form})
 
 @login_required
-def student_after_registration(request):
-    form = RegistrationForm()
-    if request.method=='POST':
-        form = RegistrationForm(data=request.POST,instance=request.user.student)
-        if form.is_valid():
-            form.save()
+def get_room(request):
+    rooms = ''
+    try:
+        gen = request.user.student.gender
+        obj = Hostel.objects.get(gender=gen)
+        rooms = Room.objects.filter(hostel=obj.id)
+    except:
+        pass
+    return render(request, 'room.html', {'room': rooms})
+
+@login_required
+def select_room(request, pk):
+    try:
+        room = Room.objects.get(pk=pk)
+        if room.room_type == 'S':
+            stu = Student.objects.get(pk=request.user.student.id)
+            stu.room = room
+            stu.room_allotted = True
+            room.current_no_of_persons +=1
+            room.vacant = False
+            room.save()
+            stu.save()
             return redirect('hostelapp:student_profile')
         else:
-            form = RegistrationForm()
-    else:
-        form = RegistrationForm()
-    return render(request,'after_reg.html',{'form':form})
+            stu = Student.objects.get(pk=request.user.student.id)
+            stu.room = room
+            stu.room_allotted = True
+            room.current_no_of_persons +=1
+            room.save()
+            if room.current_no_of_persons == room.max_no_of_persons:
+                room.vacant = False
+                room.save()
+            stu.save()
+            return redirect('hostelapp:student_profile')
+    except:
+        pass
+    return render(request,'Student_profile.html')
+
 
 def user_login(request):
     context = ''
-    if request.method=='POST':
+    if request.method == 'POST':
         username = request.POST.get('Username').upper()
         password = request.POST.get('Password')
-        user = authenticate(request,username = username,password = password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             if user.is_warden:
                 if user.is_active:
-                    login(request,user)
+                    login(request, user)
                     return redirect('hostelapp:warden_home')
 
             else:
                 if user.is_active:
-                    login(request,user)
+                    login(request, user)
                     return redirect("hostelapp:student_profile")
 
         else:
             context = 'Disabled acc contact Your warden or Admin'
 
-
-    return render(request,'Login.html',{'message':context})
-
+    return render(request, 'Login.html', {'message': context})
 
 
 @login_required
 def warden_homepage(request):
     user = request.user
     if user is not None:
-        if  user.is_warden:
-            login(request,user)
-            room_list = user.warden.hostel.room_set.all().order_by('no')
-
+        if user.is_warden:
+            warden = request.user.warden.hostel
+            stud = Student.objects.filter(room__hostel=warden)
         else:
-            return HttpResponse("Invalid Login")
+            return HttpResponse("You are Not warden")
 
-    return render(request,'warden_home.html',{'room':room_list})
+    return render(request, 'wardenindex.html',{'student':stud})
+
 
 @login_required
 def user_logout(request):
@@ -107,71 +119,28 @@ def user_logout(request):
 
 @login_required
 def student_profile(request):
-    context = ''
-    user = request.user
-    if user is not None:
-        if user.is_warden:
-            return HttpResponse('Invalid Login')
-        if user.is_active:
-            login(request, user)
-            student = request.user.student
-            leaves = Leave.objects.filter(student=request.user.student)
-            if not request.user.student.room_allotted:
-                context = 'Please Select room'
-            return render(request, 'Student_profile.html', {'student': student, 'leaves': leaves,'msg':context})
+    stu = Student.objects.get(pk=request.user.student.id)
+    return render(request,'Student_profile.html',{'student':stu})
 
-        else:
-            return HttpResponse('Disabled account')
-    else:
-        return HttpResponse('Invalid Login')
 
 
 @login_required
-def select(request):
-    form = SelectionForm()
-    if request.method=='POST':
-        if request.user.student.room:
-            old_room_id = request.user.student.room_id
-            print(f'old room id:{old_room_id}')
-        form = SelectionForm(data=request.POST,instance=request.user.student)
-        if form.is_valid():
-            if request.user.student.room_id:
-                request.user.student.room_allotted = True
-                new_room_id = request.user.student.room_id
-                print(f'new room id:{new_room_id}')
-                room = Room.objects.get(id=new_room_id)
-                room.vacant = False
-                room.save()
-                try:
-                    room = Room.objects.get(id=old_room_id)
-                    room.vacant = True
-                    room.save()
-                except BaseException:
-                    pass
-                student = form.save()
-                return redirect("hostelapp:student_profile")
-
-    return render(request,'room.html',{'form':form})
-
-
-
-
 def user_leave(request):
     form = LeaveForm()
-    if request.method =="POST":
+    if request.method == "POST":
         form = LeaveForm(data=request.POST)
 
         if form.is_valid() and request.user.student.room_allotted:
             start = form.cleaned_data['start_date']
             end = form.cleaned_data['end_date']
             delta = end-start
-            if delta.days >=0 and (start-datetime.date.today()).days>=0:
+            if delta.days >= 0 and (start-datetime.date.today()).days >= 0:
                 usr_contr = Leave.objects.filter(
-                    student=request.user.student,start_date__lte=end,end_date__gte=start
+                    student=request.user.student, start_date__lte=end, end_date__gte=start
                 )
                 count = usr_contr.count()
                 count = int(count)
-                if count ==0:
+                if count == 0:
                     leave_form = form.save(commit=False)
                     student = request.user.student
                     leave_form.student = student
@@ -193,17 +162,17 @@ def user_leave(request):
             return render(request, 'leave_form.html', {'form': form})
     else:
         form = LeaveForm()
-    return render(request,'leave.html',{'form':form})
+    return render(request, 'leave.html', {'form': form})
 
-
+@login_required
 def maintainence(request):
     context = ''
     form = RepairForm()
-    if request.method=='POST':
+    if request.method == 'POST':
         form = RepairForm(data=request.POST)
-        if form.is_valid() and request.user.student.room_allotted :
+        if form.is_valid() and request.user.student.room_allotted:
             repair = form.cleaned_data['repair']
-            room  = request.user.student.room
+            room = request.user.student.room
             room.repair = repair
             room.save()
             context = 'Complient Registered'
@@ -213,13 +182,80 @@ def maintainence(request):
 
     else:
         form = RepairForm()
-    return render(request,'repair.html',{'form':form,'context':context})
-
+    return render(request, 'repair.html', {'form': form, 'context': context})
 
 
 def Warden_add_room(request):
-    pass
+    form = RoomForm()
+    msg = ''
+    if request.method == 'POST':
+        gender = request.user.warden.hostel.gender
+        hos = Hostel.objects.get(gender=gender)
+        form = RoomForm(data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            if data['Room_Type'] == 'S':
+                room = Room.objects.get_or_create(no=data['Room_No'],room_type='S',max_no_of_persons=1,current_no_of_persons=0,
+                                                  vacant=True,hostel=hos)
+                msg = 'Room added Sucessfully'
+            else:
+                room = Room.objects.get_or_create(no=data['Room_No'], room_type='D', max_no_of_persons=2,
+                                                  current_no_of_persons=0,
+                                                  vacant=True, hostel=hos)
+                msg = 'Room added Sucessfully'
+    return render(request,'addroom.html',{'form':form,'message':msg})
+
+
+def leave_applications(request):
+    warden_hostel = request.user.warden.hostel
+    stud = Student.objects.filter(room__hostel=warden_hostel)
+    leave = Leave.objects.filter(student__in=stud).filter(accept=False, reject=False)
+    today = datetime.datetime.now().date()
+    yesterday = today - datetime.timedelta(15)
+    accepted_leaves = Leave.objects.filter(student__in=stud, accept=True,
+                                           start_date__lte=today, end_date__gte=yesterday). \
+        order_by('-confirm_time')
+
+    return render(request,'leaveapplication.html',{'leav':leave,'accepted_leave':accepted_leaves})
+
+
+def accept_leave(request,pk):
+    leave = Leave.objects.get(pk=pk)
+    try:
+        leave.accept = True
+        leave.save()
+    except:
+        pass
+    return redirect('hostelapp:leaveapplications')
+
+
+def reject_leave(request,pk):
+    leave = Leave.objects.get(pk=pk)
+    try:
+        leave.reject = True
+        leave.save()
+    except:
+        pass
+    return redirect('hostelapp:leaveapplications')
 
 
 
+def wardenroom_grivelences(request):
+    user = request.user
+    if user is not None:
+        if user.is_warden:
+            warden = request.user.warden.hostel
+            stud = Student.objects.filter(room__hostel=warden)
 
+        else:
+            return HttpResponse("You are Not warden")
+
+    return render(request,'wardengrivelences.html',{'room':stud})
+
+
+
+def warden_resolve(request,pk):
+    room = Room.objects.get(pk=pk)
+    room.repair = ""
+    room.save()
+    return redirect('hostelapp:roomgrivelences')

@@ -4,29 +4,40 @@ from django import forms
 from django.core import validators
 import datetime
 
-YEARS = [x for x in range(2000, 3000)]
+YEARS = [x for x in range(1990, 3000)]
+
+class registrationForm(forms.Form):
+    BRANCHES = [('CS', 'Computer Science'), ('IS', 'Information Science'), ('EC', 'Electronics And Communication'),
+                ('EEE', 'Electrical And Electronics'), ('ME', 'Mecanical')]
+    gender_choices = [('M', 'Male'), ('F', 'Female')]
+    Name = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Branch = forms.ChoiceField(choices=BRANCHES)
+    USN = forms.CharField(max_length=13,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Phone_no = forms.CharField(max_length=12,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Adress = forms.CharField(max_length=255,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Gender = forms.ChoiceField(choices=gender_choices)
+    DOB = forms.DateField(widget=forms.SelectDateWidget(years=YEARS,attrs={'class': 'form-control'}))
+    Father_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Father_mbl_no = forms.CharField(max_length=15,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Username = forms.CharField(max_length=20,help_text=USN,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    Confirm_Password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    def clean(self):
+        cleaned_data = super(registrationForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("Confirm_Password")
+
+        if len(password)<8:
+            raise forms.ValidationError('Password must be 8 character long')
 
 
-class UserForm(UserCreationForm):
-    password1 = forms.CharField(
-        min_length=8, max_length=30, widget=forms.PasswordInput(render_value=False))
+        if password != confirm_password:
+            raise forms.ValidationError(
+                "password and confirm_password does not match"
+            )
 
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
-        help_texts = {
-            'username': '''Same as Your <strong>USN</strong> in <strong>UPPER</strong> case'''
-        }
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control'})
-
-        }
-
-        def clean_username(self):
-            return self.cleaned_data['username'].upper()
 
 
 class LoginForm(forms.Form):
@@ -34,26 +45,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class RegistrationForm(forms.ModelForm):
 
-    class Meta:
-        model = Student
-        fields = [
-            'student_name',
-            'USN',
-            'student_mbl_no',
-            'adress',
-            'father_name',
-            'father_mbl_no',
-            'Branch',
-            'dob',
-            'gender']
-
-
-class SelectionForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        fields = ['room']
 
 
 class DuesForm(forms.Form):
@@ -64,10 +56,6 @@ class DuesForm(forms.Form):
 class NoDuesForm(forms.Form):
     choice = forms.ModelChoiceField(
         queryset=Student.objects.all().filter(no_dues=False))
-
-
-class DateInput(forms.DateInput):
-    input_type = 'date'
 
 
 class LeaveForm(forms.ModelForm):
@@ -90,3 +78,12 @@ class RepairForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = ['repair']
+
+
+class RoomForm(forms.Form):
+    choices = [('S','Single_Room'),('D','Double_Room')]
+    Room_No = forms.CharField(max_length=10)
+    Room_Type = forms.ChoiceField(choices=choices)
+    
+
+

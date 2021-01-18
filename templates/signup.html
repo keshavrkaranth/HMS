@@ -1,36 +1,60 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Signup</title>
     <link rel="icon" href="{% static '../static/assets/img/cec-logo.jpg' %}">
-     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </head>
-<body>
-<center><h3>Signup</h3></center>
+<style>
+    body{
+        padding: 0;
+        margin: 0;
+    }
+    #main{
+        background-image: url("https://images.unsplash.com/photo-1606589368250-cefcd8b4e306?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80") ;
+        background-repeat: no-repeat;
+        background-size: 100vw 100vh;
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-5">
-            <form method="post">
-                {% csrf_token %}
-                {% if message %}
-                <h3>{{ message }}</h3>
-                {% endif %}
-                {{ form.as_p }}
-                <input type="submit" class="btn btn-success" value="Register">
-</form>
+    }
+    h3{
+        color: white;
+
+    }
+
+</style>
+<body >
+
+
+    <div  style="display: flex;justify-content: center;flex-wrap: wrap;align-content: center;flex-direction: column;margin: 0">
+    <center><h3>Signup</h3></center>
+
+
+        <div class="row">
+                <div style="width: 35vw;" >
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-success" value="Register">
+                </form>
+            </div>
+
         </div>
     </div>
-</div>
 
 </body>
+
 </html>

@@ -6,6 +6,8 @@ body {
     background-size: cover;
     font-family: sans-serif;
     height: 500px;
+    background-repeat: no-repeat;
+    object-fit: cover;
 }
 
 .login-box {

@@ -5,8 +5,9 @@
         You have Not Selected Room Please Select<a href="{% url  'hostelapp:room_select' %}" class="alert-link"> ROOM</a>.
     </div>
     {% endif %}
+    <br>
 
-    <div class="container">
+    <div class="container" >
         <div class="jumbotron">
             <p> Name : {{ student.student_name }}</p>
             <p> USN : {{ student.USN }}</p>

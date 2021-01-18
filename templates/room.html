@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> Room</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="select room">
-</form>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <p> Note <strong>S</strong> Stands For <strong>Single Room</strong>, <strong>D</strong> Stands For <strong>Double
+            Room Room</strong></p>
 
-</body>
-</html>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {%for i in room %}
+        {% if i.vacant %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{% static '../static/assets/img/download.jpg' %}" class="card-img-top" alt=":(">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Room No: {{i.no}}</strong></h5>
+                    <p>Max no of persons: {{ i.max_no_of_persons }}</p>
+                    <p>Current no of persons: {{ i.current_no_of_persons }}</p>
+                    <a href="{% url 'hostelapp:select_room' i.id %}"><button class="btn btn-secondary">Select
+                            Room</button></a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {%endfor%}
+    </div>
+</div>
+{% endblock %}

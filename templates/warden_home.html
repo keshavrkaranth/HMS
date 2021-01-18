@@ -1,75 +1,37 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Warden Home</title>
-    <link rel="icon" href="{% static '../static/assets/img/cec-logo.jpg' %}">
-   <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>CANHOST | WARDEN HOME </title>
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/base.css' %}">
 </head>
+
 <body>
-    <div class="container">
-        <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Hostel</th>
-                <th scope="col">Room no</th>
-                <th scope="col">Type</th>
-                <th scope="col">Status</th>
-                <th scope="col">Student Name</th>
-                <th scope="col">USN</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Maintainence</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for rm in room %}
-    <tr>
+    <nav class="navbar navbar-light navbar-expand-md navbar navbar-dark bg-dark">
+        <div class="container-fluid"><a class="navbar-brand" href="{% url 'hostelapp:warden_home' %}">CANHOST</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link " href="{% url 'hostelapp:addroom' %} ">Add Room</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:leaveapplications' %}">Leave applications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:roomgrivelences' %}">Room Grivelences</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
 
-    <td>{{ rm.hostel }}</td>
-                <td>{{ rm.no }}</td>
-                <td>{{ rm.room_type }}</td>
-                <td>
-                    {% if rm.vacant %}
-                    vacant
-                    {% else %}
-                    occupied
-                    {% endif %}
-                </td>
-                <td>
-                {% if rm.vacant %}
-                    -----
-                    {% else %}
-                    {{ rm.student.student_name }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if rm.vacant %}
-                    -----
-                    {% else %}
-                    {{ rm.student.USN }}
-                    {% endif %}
-                </td>
-                <td>
-                {% if rm.vacant %}
-                    -----
-                    {% else %}
-                    {{ rm.student.gender }}
-                    {% endif %}
-                </td>
-                <td>
-                {% if rm.vacant %}
-                    -----
-                    {% else %}
-                    {{ rm.repair}}
-                    {% endif %}
-                </td>
 
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-    </div>
 
+{% block content %}
+{% endblock %}
 </body>
+
 </html>
