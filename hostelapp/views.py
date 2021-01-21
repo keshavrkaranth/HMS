@@ -305,3 +305,10 @@ def feedback_home(request):
             feed.save()
             return redirect('hostelapp:feedback')
     return render(request,'feedback_home.html',{'form':form})
+
+
+def profile(request):
+    usr = request.user.student.student_name
+    student = Student.objects.get(student_name=usr)
+
+    return render(request,'profile.html',{'stu':student})

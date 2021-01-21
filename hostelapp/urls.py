@@ -23,4 +23,5 @@ urlpatterns = [
     path('resolve/<int:pk>/',warden_resolve,name='resolve'),
     path('feedback/',feedback,name='feedback'),
     path('feedback_home',feedback_home,name='feedback_home'),
+    path('profile',profile,name='profile'),
 ]

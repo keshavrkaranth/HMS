@@ -1,0 +1,18 @@
+{% extends 'warden_home.html' %}
+
+{% load static %}
+{% block content %}
+    {% if message %}
+        <script src="{% static 'assets/js/addroom.js' %}"></script>
+    {% endif %}
+    <br>
+    <div class="container">
+   <div class="jumbotron">
+       <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <input type="submit" value="Add Room" >
+    </form>
+   </div>
+    </div>
+{% endblock %}

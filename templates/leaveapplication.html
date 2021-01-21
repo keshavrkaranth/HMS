@@ -1,0 +1,69 @@
+{% extends 'warden_home.html' %}
+{% block content %}
+<br>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="container">
+      <div class="jumbotron">
+        <center>
+          <h3><strong>Leave Application</strong></h3>
+        </center>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Student name</th>
+              <th scope="col">Start date</th>
+              <th scope="col">End date</th>
+              <th scope="col">Reason</th>
+                <th scope="col">Accept</th>
+                <th scope="col">Reject</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for l in leav %}
+            <tr>
+              <th>{{ l.student.student_name }}</th>
+              <td>{{ l.start_date }}</td>
+              <td>{{ l.end_date }}</td>
+              <td>{{ l.reason }}</td>
+            <td><a href="{% url 'hostelapp:acceptleave' l.id %}"><button class="btn btn-warning">Accept</button></a></td>
+           <td> <a href="{% url 'hostelapp:rejectleave' l.id %}"><button class="btn btn-danger">Reject</button></a></td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    <div class="col-sm-6">
+        <div class="container">
+            <div class="jumbotron">
+              <center> <h3><strong>Accepted Leave</strong></h3></center>
+                <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Student name</th>
+              <th scope="col">Start date</th>
+              <th scope="col">End date</th>
+              <th scope="col">Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for l in accepted_leave %}
+            <tr>
+              <th>{{ l.student.student_name }}</th>
+              <td>{{ l.start_date }}</td>
+              <td>{{ l.end_date }}</td>
+              <td>{{ l.reason }}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

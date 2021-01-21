@@ -11,18 +11,22 @@
     <link rel="stylesheet" href="{% static 'assets/css/base.css' %}">
 </head>
 
-<body style='background-image: url("https://static1.bigstockphoto.com/1/5/2/large1500/251027860.jpg")'>
+<body style="background: lightgoldenrodyellow">
     <nav class="navbar navbar-light navbar-expand-md navbar navbar-dark bg-dark">
-        <div class="container-fluid"><a class="navbar-brand" href="{% url 'hostelapp:student_profile' %}">CANHOST</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container-fluid"><a class="navbar-brand" href="{% url 'hostelapp:leave' %}">CANHOST</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a class="nav-link active" href="#">Hey {{ user.username }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:leave' %}">Apply Leave</a></li>
+
                     <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:room_maintenence' %}">Room Maintainence</a></li>
+                </ul>
+                 <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:profile' %}">Profile</a></li>
                 </ul>
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="{% url 'hostelapp:logout' %}">Logout</a></li>
                 </ul>
+
             </div>
         </div>
     </nav>

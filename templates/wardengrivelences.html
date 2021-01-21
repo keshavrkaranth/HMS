@@ -1,0 +1,36 @@
+{% extends 'warden_home.html' %}
+
+{% block content %}
+    <br>
+    <div class="container">
+    <div class="jumbotron">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Room No</th>
+                <th>Room Type</th>
+                <th>Maintenence</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for r in room %}
+                <tr>
+                <td>{{ r.student_name }}</td>
+                <td>{{ r.room.no }}</td>
+                <td>{{ r.room.room_type }}</td>
+                    {% if r.room.repair %}
+                <td>{{ r.room.repair }}</td>
+                        {% else %}
+                        <td>-----</td>
+                    {% endif %}
+                <td><a href="{% url 'hostelapp:resolve' r.room.id %}"><button class="btn btn-warning">Resolved</button></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock %}

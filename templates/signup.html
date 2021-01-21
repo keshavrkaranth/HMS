@@ -22,7 +22,7 @@
 
 
 
-<body >
+<body style="background: lightgoldenrodyellow;">
 
 
     <div  style="display: flex;justify-content: center;flex-wrap: wrap;align-content: center;flex-direction: column;margin: 0">
@@ -34,7 +34,9 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
+                    <p>If u alredy have an account <a href="{% url 'hostelapp:login' %}">click here</a></p>
                     <input type="submit" class="btn btn-success" value="Register">
+
                 </form>
             </div>
 
