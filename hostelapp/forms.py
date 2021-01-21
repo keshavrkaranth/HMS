@@ -82,8 +82,14 @@ class RepairForm(forms.ModelForm):
 
 class RoomForm(forms.Form):
     choices = [('S','Single_Room'),('D','Double_Room')]
-    Room_No = forms.CharField(max_length=10)
+    Room_No = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'placeholder':'ex D1,S1'}))
     Room_Type = forms.ChoiceField(choices=choices)
+
+
+class FeedbackForm(forms.Form):
+    choice = [('1','1'),('2','2'),('3','3'),('4','4'),('5','5')]
+    Review = forms.CharField(max_length=255)
+    rating = forms.ChoiceField(choices=choice)
     
 
 

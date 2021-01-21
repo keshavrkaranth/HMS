@@ -58,7 +58,7 @@ def select_room(request, pk):
             room.vacant = False
             room.save()
             stu.save()
-            return redirect('hostelapp:student_profile')
+            return redirect('hostelapp:leave')
         else:
             stu = Student.objects.get(pk=request.user.student.id)
             stu.room = room
@@ -69,7 +69,7 @@ def select_room(request, pk):
                 room.vacant = False
                 room.save()
             stu.save()
-            return redirect('hostelapp:student_profile')
+            return redirect('hostelapp:leave')
     except:
         pass
     return render(request,'Student_profile.html')
@@ -90,7 +90,7 @@ def user_login(request):
             else:
                 if user.is_active:
                     login(request, user)
-                    return redirect("hostelapp:student_profile")
+                    return redirect("hostelapp:leave")
 
         else:
             context = 'Disabled acc contact Your warden or Admin'
@@ -162,7 +162,10 @@ def user_leave(request):
             return render(request, 'leave_form.html', {'form': form})
     else:
         form = LeaveForm()
-    return render(request, 'leave.html', {'form': form})
+    user = request.user.student
+    leave = Leave.objects.filter(student= user)
+
+    return render(request, 'leave.html', {'form': form,'leav':leave})
 
 @login_required
 def maintainence(request):
@@ -184,7 +187,7 @@ def maintainence(request):
         form = RepairForm()
     return render(request, 'repair.html', {'form': form, 'context': context})
 
-
+@login_required
 def Warden_add_room(request):
     form = RoomForm()
     msg = ''
@@ -259,3 +262,46 @@ def warden_resolve(request,pk):
     room.repair = ""
     room.save()
     return redirect('hostelapp:roomgrivelences')
+
+
+def feedback(request):
+    form = LoginForm()
+    context = ''
+    if request.method == 'POST':
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            user = authenticate(request, username=data['username'], password=data['password'])
+            if user:
+                if user is not None:
+                    if user.is_warden:
+                        context = 'warden are not allowed to give feedback'
+                    else:
+                        if user.is_active:
+                            login(request, user)
+                            return redirect("hostelapp:feedback_home")
+            else:
+                context = 'Invalid credentials'
+
+    else:
+
+        print('eoor')
+    feed = Feedback.objects.order_by('rating')
+
+    return render(request,'feedback.html',{'form':form,'feedback':feed,'msg':context})
+
+
+def feedback_home(request):
+    form = FeedbackForm()
+    if request.method == 'POST':
+        usr = request.user.student.id
+        stu = Student.objects.get(id=usr)
+
+        form = FeedbackForm(data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            feed = Feedback.objects.create(student = stu,review=data['Review'],rating=data['rating'])
+            feed.save()
+            return redirect('hostelapp:feedback')
+    return render(request,'feedback_home.html',{'form':form})

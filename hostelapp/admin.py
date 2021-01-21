@@ -8,6 +8,7 @@ admin.site.register(Room)
 admin.site.register(Hostel)
 admin.site.register(Warden)
 
+
 @admin.register(Leave)
 class LeaveAdmin(admin.ModelAdmin):
     list_display = ['student', 'start_date', 'end_date',
@@ -16,3 +17,7 @@ class LeaveAdmin(admin.ModelAdmin):
 @admin.register(created_date)
 class created(admin.ModelAdmin):
     list_display = ['user','created_date']
+
+@admin.register(Feedback)
+class feedback(admin.ModelAdmin):
+    list_display = ['student','rating']

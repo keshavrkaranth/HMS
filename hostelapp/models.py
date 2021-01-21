@@ -131,6 +131,17 @@ class Leave(models.Model):
         return f'{self.student.USN} '
 
 
+
+class Feedback(models.Model):
+    student = models.ForeignKey('Student',on_delete=models.CASCADE)
+    review = models.TextField()
+    rating = models.IntegerField()
+
+    def __str__(self):
+        return self.student.student_name
+
+
+
 class created_date(models.Model):
     user = models.CharField(max_length=20)
     created_date = models.DateField()

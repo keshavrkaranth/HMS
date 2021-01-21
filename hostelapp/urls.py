@@ -21,4 +21,6 @@ urlpatterns = [
     path('rejectleave/<int:pk>/',reject_leave,name='rejectleave'),
     path('roomgrivelences/',wardenroom_grivelences,name='roomgrivelences'),
     path('resolve/<int:pk>/',warden_resolve,name='resolve'),
+    path('feedback/',feedback,name='feedback'),
+    path('feedback_home',feedback_home,name='feedback_home'),
 ]

@@ -1,15 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Leave</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+{% extends 'base.html' %}
+{% block title %}
+    <title>CANHOST | HOME</title>
 
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="row">
+    <div class="col-sm-4">
+        <div class="container">
+            <h2><center>Leave Application</center></h2>
+            <br>
+            <form method="get">
+            {{ form.as_p }}
+                <input type="submit" value="Aplay for leave">
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="container">
+
+            <h2><center>Leave Applcations</center></h2>
+              <br>
+            <table class="table table-hover">
+                        <thead>
+                            <tr>
+
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End date</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if leav %}
+                            {% for s in leav %}
+                            <tr>
+                                <td>{{ s.start_date}}</td>
+                                <td>{{ s.end_date }}</td>
+                                <td>{{ s.reason }}</td>
+                                {% if s.accept %}
+                                <td><span>&#10004;</span></td>
+                                {% elif s.reject %}
+                                <td><span >&#10006;</span></td>
+                                {% else %}
+                                <td>--------</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                                <tr>
+                                <td><h2>No data</h2></td>
+                                </tr>
+                        {% endif %}
+
+                        </tbody>
+                    </table>
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
