@@ -24,4 +24,5 @@ urlpatterns = [
     path('feedback/',feedback,name='feedback'),
     path('feedback_home',feedback_home,name='feedback_home'),
     path('profile',profile,name='profile'),
+    path('updateprofile/<int:pk>/',update_profile,name='updateprofile')
 ]

@@ -16,7 +16,7 @@
                 Father Name:{{ stu.father_name }}<br>
                 Father Number:{{ stu.father_mbl_no }}<br>
                 <br>
-                <button class="btn btn-danger">Update profile</button>
+                <a href="{% url 'hostelapp:updateprofile' stu.id %}"><button class="btn btn-danger">Update profile</button></a>
             </div>
         </div>
     </div>

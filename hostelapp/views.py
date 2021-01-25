@@ -312,3 +312,13 @@ def profile(request):
     student = Student.objects.get(student_name=usr)
 
     return render(request,'profile.html',{'stu':student})
+
+
+def update_profile(request,pk):
+    form = updateprofile()
+    if request.method=='POST':
+        stu = Student.objects.get(id=pk)
+        form = updateprofile(request.POST,instance=stu)
+        if form.is_valid():
+            form.save()
+    return render(request,'update_profile.html',{'form':form})
