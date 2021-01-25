@@ -1,19 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Repair</title>
-</head>
-<body>
-{% if context %}
-        {{ context }}
-    {% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register Complient">
+{% extends 'base.html' %}
+{% block title %}
+<title>CANHOST | Repair</title>
+{% endblock %}
+{% block content %}
 
-</form>
-
-</body>
-</html>
+    <br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="container">
+                <div class="jumbotron">
+                    {% if context %}
+                     {{ context }}
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    <input type="submit" class="btn-warning" value="Register Compliant">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

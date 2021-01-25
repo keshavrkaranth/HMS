@@ -216,7 +216,7 @@ def leave_applications(request):
     today = datetime.datetime.now().date()
     yesterday = today - datetime.timedelta(15)
     accepted_leaves = Leave.objects.filter(student__in=stud, accept=True,
-                                           start_date__lte=today, end_date__gte=yesterday). \
+                                         ). \
         order_by('-confirm_time')
 
     return render(request,'leaveapplication.html',{'leav':leave,'accepted_leave':accepted_leaves})
