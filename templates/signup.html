@@ -25,12 +25,17 @@
 <body style="background: lightgoldenrodyellow;">
 
 
-    <div  style="display: flex;justify-content: center;flex-wrap: wrap;align-content: center;flex-direction: column;margin: 0">
-    <center><h3>Signup</h3></center>
+    <div
+        style="display: flex;justify-content: center;flex-wrap: wrap;align-content: center;flex-direction: column;margin: 0">
+
+
+        <center>
+            <h3>Signup</h3>
+        </center>
 
 
         <div class="row">
-                <div style="width: 35vw;" >
+            <div style="width: 35vw;">
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}

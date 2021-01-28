@@ -1,24 +1,59 @@
 {% extends 'base.html' %}
 {% block content %}
-    <br>
-    <div class="row">
-    <div class="col-sm-6">
-        <div class="container">
-            <div class="jumbotron">
-                Name:{{ stu.student_name }}<br>
-                USN:{{ stu.USN }}<br>
-                Branch{{ stu.Branch }}<br>
-                Phone no:{{ stu.student_mbl_no }}<br>
-                Adress:{{ stu.adress }}<br>
-                DOB:{{ stu.dob }}<br>
-                Gender:{{ stu.gender }}<br>
-                Room no:{{ stu.room.no }}<br>
-                Father Name:{{ stu.father_name }}<br>
-                Father Number:{{ stu.father_mbl_no }}<br>
-                <br>
-                <a href="{% url 'hostelapp:updateprofile' stu.id %}"><button class="btn btn-danger">Update profile</button></a>
-            </div>
-        </div>
-    </div>
-    </div>
+<br>
+
+<div class="container">
+    <center>
+        <table class="table table-hover table-dark">
+
+            <tbody>
+                <tr>
+                    <td>Name :</td>
+                    <td>{{ stu.student_name }}</td>
+
+                </tr>
+                <tr>
+                    <td>USN :</td>
+                    <td>{{ stu.USN }}</td>
+                </tr>
+                <tr>
+                    <td>Branch :</td>
+                    <td>{{ stu.Branch }}</td>
+                </tr>
+                <tr>
+                    <td>Phone no :</td>
+                    <td>{{ stu.student_mbl_no }}</td>
+                </tr>
+                <tr>
+                    <td>Adress :</td>
+                    <td>{{ stu.adress }}</td>
+                </tr>
+                <tr>
+                    <td>DOB :</td>
+                    <td>{{ stu.dob }}</td>
+                </tr>
+                <tr>
+                    <td>Gender :</td>
+                    <td>{{ stu.gender }}</td>
+                </tr>
+                <tr>
+                    <td>Room no :</td>
+                    <td>{{ stu.room.no }}</td>
+                </tr>
+                <tr>
+                    <td>Father Name :</td>
+                    <td>{{ stu.father_name }}</td>
+                </tr>
+                <tr>
+                    <td>Father Number:</td>
+                    <td>{{ stu.father_mbl_no }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="{% url 'hostelapp:updateprofile' stu.id %}"><button class="btn btn-danger">Update
+                profile</button></a>
+    </center>
+
+</div>
+
 {% endblock %}
