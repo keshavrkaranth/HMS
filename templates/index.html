@@ -3,89 +3,94 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>CANHOST</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>CANHOST</title>
 
-    <link rel="stylesheet" href="{% static 'assets/css/Cool-Menu-Navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/navbar-center-Joce-1.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/navbar-center-Joce.css' %} ">
-    <link rel="stylesheet" href="{% static 'assets/css/Navbar-with-menu-and-login.css' %} ">
-    <link rel="stylesheet" href="{% static 'assets/css/styles.css'%} ">
-    <link rel="icon" href="{% static '../static/assets/img/cec-logo.jpg' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/Cool-Menu-Navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/navbar-center-Joce-1.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/navbar-center-Joce.css' %} ">
+  <link rel="stylesheet" href="{% static 'assets/css/Navbar-with-menu-and-login.css' %} ">
+  <link rel="stylesheet" href="{% static 'assets/css/styles.css'%} ">
+  <link rel="icon" href="{% static '../static/assets/img/cec-logo.jpg' %}">
 
-    <!-- bootstrap-scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <!-- bootstrap-scripts -->
+  <script src="{% static 'assets/bootstrap/js/jquery.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 
 <body>
 
 
 
-    <div class="header">
-        <div class="header-item1">
-            <img class="logo" src="{% static 'assets\img\logo1.png' %}">
-        </div>
-        <div class="header-item2">
-            <h1 class="heading">CANHOST</h1>
-        </div>
-
-
-
-
-
+  <div class="header">
+    <div class="header-item1">
+      <img class="logo" src="{% static 'assets\img\logo1.png' %}">
     </div>
-    <section class="cool-menu">
-        <nav>
-            <ul>
-                <li><a href="{% url 'hostelapp:signup' %} "><span class="menu">
-                            <span class="f-word" data-hover="Regis" >Regis</span>
-                            <span class="s-word" data-hover="tration" >tration</span>
-                        </span></a></li>
-                <li><a href="{% url 'hostelapp:login' %}"><span class="menu">
-                            <span class="f-word" data-hover="Log" >Log</span>
-                            <span class="s-word" data-hover="In" >in</span>
-                        </span></a></li>
-                <li><a data-toggle="modal" data-target="#exampleModalCenter"><span class="menu" >
-                            <span class="f-word" data-hover="Cont" >Cont</span>
-                            <span class="s-word" data-hover="act" >act</span>
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Contact Us</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <p>CANARA ENGINEERING COLLEGE</p>
-            <p>Benjanapadavu, Bantwal Taluk</p>
-            <p>Mangaluru, D.K. District</p>
-            <p>Karnataka, INDIA - 574219</p>
-
-          <p> Phone : 8792727001 / 8792736001</p>
-            <p> Fax : 0824-2278675
-            <p>Email : canarait@gmail.com</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-      </div>
+    <div class="header-item2">
+      <h1 class="heading">CANHOST</h1>
     </div>
+
+
+
+
+
   </div>
-</div>
-                        </span></a></li>
-                <li><a href="{% url 'hostelapp:feedback' %}" ><span class="menu">
-                            <span class="f-word" data-hover="Feed" >Feed</span>
-                            <span class="s-word" data-hover="back" >back</span>
-                        </span></a></li>
-            </ul>
-        </nav>
-    </section>
+  <section class="cool-menu">
+    <nav>
+      <ul>
+        <li><a href="{% url 'hostelapp:signup' %} "><span class="menu">
+              <span class="f-word" data-hover="Regis">Regis</span>
+              <span class="s-word" data-hover="tration">tration</span>
+            </span></a></li>
+        <li><a href="{% url 'hostelapp:login' %}"><span class="menu">
+              <span class="f-word" data-hover="Log">Log</span>
+              <span class="s-word" data-hover="In">in</span>
+            </span></a></li>
+        <li><a data-toggle="modal" data-target="#exampleModalCenter"><span class="menu">
+              <span class="f-word" data-hover="Cont">Cont</span>
+              <span class="s-word" data-hover="act">act</span>
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Contact Us</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>CANARA ENGINEERING COLLEGE</p>
+                      <p>Benjanapadavu, Bantwal Taluk</p>
+                      <p>Mangaluru, D.K. District</p>
+                      <p>Karnataka, INDIA - 574219</p>
+
+                      <p> Phone : 8792727001 / 8792736001</p>
+                      <p> Fax : 0824-2278675
+                      <p>Email : canarait@gmail.com</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </span></a></li>
+        <li><a href="{% url 'hostelapp:feedback' %}"><span class="menu">
+              <span class="f-word" data-hover="Feed">Feed</span>
+              <span class="s-word" data-hover="back">back</span>
+            </span></a></li>
+      </ul>
+    </nav>
+  </section>
 
 </body>
 

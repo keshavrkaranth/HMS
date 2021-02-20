@@ -130,8 +130,10 @@ def user_leave(request):
     form = LeaveForm()
     if request.method == "POST":
         form = LeaveForm(data=request.POST)
+        print("in form")
 
         if form.is_valid() and request.user.student.room_allotted:
+            print("in valid")
             start = form.cleaned_data['start_date']
             end = form.cleaned_data['end_date']
             delta = end-start
@@ -148,7 +150,7 @@ def user_leave(request):
                     leave_form.save()
                     leaves = Leave.objects.filter(student=request.user.student)
 
-                    return render(request, 'Student_profile.html', {'student': student, 'leaves': leaves})
+                    return render(request, 'leave.html', {'student': student, 'leaves': leaves})
                 else:
                     return HttpResponse('<h3>Already have a Leave in this period Try another</h3>  <br> '
                                         '<a href = \'\' style = "text-align: center; color: Red ;"> Apply Leave </a> ')
@@ -159,8 +161,9 @@ def user_leave(request):
             return HttpResponse('<h3>First Select a Room </h3> <br> <a href = \'select\''
                                 ' style = "text-align: center; color: Red ;"> SELECT ROOM </a> ')
         else:
+            print("error")
             form = LeaveForm()
-            return render(request, 'leave_form.html', {'form': form})
+            return render(request, 'leave.html', {'form': form})
     else:
         form = LeaveForm()
     user = request.user.student
@@ -181,7 +184,7 @@ def maintainence(request):
             room.repair = repair
             room.save()
             context = 'Complient Registered'
-            return redirect('hostelapp:student_profile')
+            return redirect('hostelapp:leave')
         elif not request.user.student.room_allotted:
             return HttpResponse("Plz Select Room Before Registering Complient")
 
@@ -289,8 +292,7 @@ def feedback(request):
 
     else:
 
-        print('eoor')
-    feed = Feedback.objects.order_by('rating')
+        feed = Feedback.objects.order_by('rating')
 
     return render(request, 'feedback.html', {'form': form, 'feedback': feed, 'msg': context})
 
