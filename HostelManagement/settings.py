@@ -28,7 +28,7 @@ SECRET_KEY = '$ol-b)kv9^n#3y*=$+^826&6mh886$8ntmz7#lj+)i&-bpjw^)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.148', '127.0.0.1','172.20.10.4','192.168.137.1']
+ALLOWED_HOSTS = ['canhost.herokuapp.com','127.0.0.1']
 AUTH_USER_MODEL = 'hostelapp.User'
 
 
