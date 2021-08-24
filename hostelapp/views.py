@@ -150,7 +150,7 @@ def user_leave(request):
                     leave_form.save()
                     leaves = Leave.objects.filter(student=request.user.student)
 
-                    return render(request, 'leave.html', {'student': student, 'leaves': leaves})
+                    return redirect('hostelapp:leave')
                 else:
                     return HttpResponse('<h3>Already have a Leave in this period Try another</h3>  <br> '
                                         '<a href = \'\' style = "text-align: center; color: Red ;"> Apply Leave </a> ')

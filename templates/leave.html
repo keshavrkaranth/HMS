@@ -8,12 +8,13 @@
     <br>
     <div class="row">
     <div class="col-sm-4">
-        <div class="container">
+        <div class="container" style="margin: 20px">
             <h2><center>Leave Application</center></h2>
             <br>
-            <form method="get">
+            <form method="POST">
+                {% csrf_token %}
             {{ form.as_p }}
-                <input type="submit" class="btn-dark" value="Aplay for leave">
+                <input type="submit" class="btn-dark" value="Apply for leave" style="margin-left: 70px;">
             </form>
         </div>
     </div>
