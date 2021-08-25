@@ -43,8 +43,12 @@ class registrationForm(forms.Form):
         phone = cleaned_data.get('Phone_no')
         fphone = cleaned_data.get('Father_mbl_no')
         confirm_password = cleaned_data.get("Confirm_Password")
+        usn = cleaned_data.get("USN")
 
-        if len(phone)<10 or len(fphone) <10 or len(phone)>10 or len(fphone)>10:
+        if Student.objects.filter(usn=usn).exists():
+            raise forms.ValidationError("Usn already Exists")
+
+        if len(phone) < 10 or len(fphone) < 10 or len(phone) > 10 or len(fphone) > 10:
             raise forms.ValidationError("Phone number should be 10 character long")
 
         if len(password) < 8:

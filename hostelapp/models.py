@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_warden = models.BooleanField(default=False)
 
+
 # trigger
 
 
@@ -40,7 +41,6 @@ class Student(models.Model):
     room_allotted = models.BooleanField(default=False)
     no_dues = models.BooleanField(default=True)
 
-
     def __str__(self):
         return str(self.student_name)
 
@@ -53,12 +53,12 @@ class Student(models.Model):
 
 
 class Room(models.Model):
-    room_choice = [('S', 'Single Occupancy'), ('D', 'Double Occupancy') ]
+    room_choice = [('S', 'Single Occupancy'), ('D', 'Double Occupancy')]
     no = models.CharField(max_length=20)
     room_type = models.CharField(
         choices=room_choice, max_length=1, default=None)
     max_no_of_persons = models.PositiveIntegerField(default=2)
-    current_no_of_persons = models.PositiveIntegerField(default=0,blank=True,null=True)
+    current_no_of_persons = models.PositiveIntegerField(default=0, blank=True, null=True)
     vacant = models.BooleanField(default=False)
     hostel = models.ForeignKey('Hostel', on_delete=models.CASCADE)
     repair = models.CharField(max_length=100, blank=True)
@@ -72,7 +72,6 @@ class Room(models.Model):
             s.room_allotted = False
             s.save()
         super(Room, self).delete(*args, **kwargs)
-
 
 
 class Hostel(models.Model):
@@ -96,7 +95,7 @@ class Warden(models.Model):
         null=True,
         on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
-    phoneno = models.CharField(max_length=12, default=None,blank=True,null=True)
+    phoneno = models.CharField(max_length=12, default=None, blank=True, null=True)
     hostel = models.ForeignKey('Hostel', default=None, null=True,
                                on_delete=models.CASCADE)
 
@@ -115,6 +114,7 @@ class Warden(models.Model):
 
         super(Warden, self).delete(*args, **kwargs)
 
+
 # stored procedure
 
 
@@ -131,15 +131,13 @@ class Leave(models.Model):
         return f'{self.student.USN} '
 
 
-
 class Feedback(models.Model):
-    student = models.ForeignKey('Student',on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
     review = models.TextField()
     rating = models.IntegerField()
 
     def __str__(self):
         return self.student.student_name
-
 
 
 class created_date(models.Model):

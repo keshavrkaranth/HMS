@@ -41,7 +41,9 @@ def get_room(request):
     rooms = ''
     try:
         gen = request.user.student.gender
+        print(gen)
         obj = Hostel.objects.get(gender=gen)
+        print(obj)
         rooms = Room.objects.filter(hostel=obj.id)
     except:
         pass
