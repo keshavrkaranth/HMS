@@ -270,6 +270,7 @@ def warden_resolve(request, pk):
 
 
 def feedback(request):
+    feed = Feedback.objects.order_by('rating')
     form = LoginForm()
     context = ''
     if request.method == 'POST':

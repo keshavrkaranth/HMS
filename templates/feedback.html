@@ -1,55 +1,64 @@
 <!doctype html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
-    <title>CANHOST | FEDBACK</title>
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <title>CANHOST | FEEDBACK</title>
 </head>
+
 <body style="background: skyblue">
 
-<br>
+    <br>
 
-        <center><h3><strong>Feedback</strong></h3></center>
+    <center>
+        <h3><strong>Feedback</strong></h3>
+    </center>
 
 
-<div class="container">
-    <div class="row">
-    <div class="col-sm-4">
-        <div class="jumbotron">
-            <center><p><strong>Login to Give Feedback</strong></p></center>
-            {% if msg %}
-                <script>alert('Invalid credentials')</script>
-        {% endif %}
-            <form method="post" >
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="jumbotron">
+                    <center>
+                        <p><strong>Login to Give Feedback</strong></p>
+                    </center>
+                    {% if msg %}
+                    <script>alert('Invalid credentials')</script>
+                    {% endif %}
+                    <form method="post">
 
-                {% csrf_token %}
-                {{ form.as_p }}
-                <a href="/">Click here to go back to home page</a>
-                <br><br>
-                <center><input type="submit" class="btn-warning" value="Login"></center>
-                <center</center>
-            </form>
-        </div>
-    </div>
-        <div class="col-sm-8">
-            <div class="jumbotron">
-                <center><h2>Feedbacks</h2></center>
-                {% for f in feedback %}
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <a href="/">Click here to go back to home page</a>
+                        <br><br>
+                        <center><input type="submit" class="btn-lg btn-primary" value="Login"></center>
+                        <center< /center>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="jumbotron">
+                    <center>
+                        <h2>Feedbacks</h2>
+                    </center>
+                    {% for f in feedback %}
                     <hr>
                     <p>Student: <strong>{{ f.student.student_name }}</strong></p>
                     <p>Review: {{ f.review }}</p>
                     <p>Rating: {{ f.rating }}/5</p>
 
                     <hr>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-</div>
 
-</div>
+    </div>
 </body>
+
 </html>

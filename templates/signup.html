@@ -39,7 +39,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <p>If u alredy have an account <a href="{% url 'hostelapp:login' %}">click here</a></p>
+                    <p>If u already have an account <a href="{% url 'hostelapp:login' %}">click here</a></p>
                     <input type="submit" class="btn btn-success" value="Register">
 
                 </form>

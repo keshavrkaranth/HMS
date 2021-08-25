@@ -19,7 +19,7 @@ class registrationForm(forms.Form):
         attrs={'class': 'form-control'}))
     Phone_no = forms.CharField(
         max_length=12, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    Adress = forms.CharField(max_length=255, widget=forms.TextInput(
+    Address = forms.CharField(max_length=255, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     Gender = forms.ChoiceField(choices=gender_choices)
     DOB = forms.DateField(widget=forms.SelectDateWidget(
@@ -40,7 +40,12 @@ class registrationForm(forms.Form):
     def clean(self):
         cleaned_data = super(registrationForm, self).clean()
         password = cleaned_data.get("password")
+        phone = cleaned_data.get('Phone_no')
+        fphone = cleaned_data.get('Father_mbl_no')
         confirm_password = cleaned_data.get("Confirm_Password")
+
+        if len(phone)<10 or len(fphone) <10 or len(phone)>10 or len(fphone)>10:
+            raise forms.ValidationError("Phone number should be 10 character long")
 
         if len(password) < 8:
             raise forms.ValidationError('Password must be 8 character long')
@@ -52,8 +57,8 @@ class registrationForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput())
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 
 class DuesForm(forms.Form):
