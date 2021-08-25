@@ -24,7 +24,7 @@ def user_registration(request):
             ), email=x['Email'], password=x['password'])
             y.set_password(y.password)
             y.save()
-            stu = Student.objects.create(user=y, student_name=x['Name'], student_mbl_no=x['Phone_no'], adress=x['Adress'], father_name=x[
+            stu = Student.objects.create(user=y, student_name=x['Name'], student_mbl_no=x['Phone_no'], adress=x['Address'], father_name=x[
                                          'Father_name'], father_mbl_no=x['Father_mbl_no'], USN=x['USN'].upper(), Branch=x['Branch'], dob=x['DOB'], gender=x['Gender'])
             stu.save()
             auth = authenticate(
