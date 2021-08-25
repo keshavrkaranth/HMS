@@ -36,7 +36,7 @@ def user_registration(request):
     return render(request, 'signup.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def get_room(request):
     rooms = ''
     try:
@@ -50,7 +50,7 @@ def get_room(request):
     return render(request, 'room.html', {'room': rooms})
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def select_room(request, pk):
     try:
         room = Room.objects.get(pk=pk)
@@ -102,7 +102,7 @@ def user_login(request):
     return render(request, 'Login.html', {'message': context})
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def warden_homepage(request):
     user = request.user
     if user is not None:
@@ -121,13 +121,13 @@ def user_logout(request):
     return render(request, 'index.html')
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def student_profile(request):
     stu = Student.objects.get(pk=request.user.student.id)
     return render(request, 'Student_profile.html', {'student': stu})
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def user_leave(request):
     form = LeaveForm()
     if request.method == "POST":
@@ -174,7 +174,7 @@ def user_leave(request):
     return render(request, 'leave.html', {'form': form, 'leav': leave})
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def maintainence(request):
     context = ''
     form = RepairForm()
@@ -195,7 +195,7 @@ def maintainence(request):
     return render(request, 'repair.html', {'form': form, 'context': context})
 
 
-@login_required
+@login_required(login_url='hostelapp:login')
 def Warden_add_room(request):
     form = RoomForm()
     msg = ''
@@ -216,7 +216,7 @@ def Warden_add_room(request):
                 msg = 'Room added Sucessfully'
     return render(request, 'addroom.html', {'form': form, 'message': msg})
 
-
+@login_required(login_url='hostelapp:login')
 def leave_applications(request):
     warden_hostel = request.user.warden.hostel
     stud = Student.objects.filter(room__hostel=warden_hostel)
@@ -230,7 +230,7 @@ def leave_applications(request):
 
     return render(request, 'leaveapplication.html', {'leav': leave, 'accepted_leave': accepted_leaves})
 
-
+@login_required(login_url='hostelapp:login')
 def accept_leave(request, pk):
     leave = Leave.objects.get(pk=pk)
     try:
@@ -240,7 +240,7 @@ def accept_leave(request, pk):
         pass
     return redirect('hostelapp:leaveapplications')
 
-
+@login_required(login_url='hostelapp:login')
 def reject_leave(request, pk):
     leave = Leave.objects.get(pk=pk)
     try:
@@ -250,7 +250,7 @@ def reject_leave(request, pk):
         pass
     return redirect('hostelapp:leaveapplications')
 
-
+@login_required(login_url='hostelapp:login')
 def wardenroom_grivelences(request):
     user = request.user
     if user is not None:
@@ -263,14 +263,14 @@ def wardenroom_grivelences(request):
 
     return render(request, 'wardengrivelences.html', {'room': stud})
 
-
+@login_required(login_url='hostelapp:login')
 def warden_resolve(request, pk):
     room = Room.objects.get(pk=pk)
     room.repair = ""
     room.save()
     return redirect('hostelapp:roomgrivelences')
 
-
+@login_required(login_url='hostelapp:login')
 def feedback(request):
     feed = Feedback.objects.order_by('rating')
     form = LoginForm()
@@ -299,7 +299,7 @@ def feedback(request):
 
     return render(request, 'feedback.html', {'form': form, 'feedback': feed, 'msg': context})
 
-
+@login_required(login_url='hostelapp:login')
 def feedback_home(request):
     form = FeedbackForm()
     if request.method == 'POST':
@@ -315,14 +315,14 @@ def feedback_home(request):
             return redirect('hostelapp:feedback')
     return render(request, 'feedback_home.html', {'form': form})
 
-
+@login_required(login_url='hostelapp:login')
 def profile(request):
     usr = request.user.student.student_name
     student = Student.objects.get(student_name=usr)
 
     return render(request, 'profile.html', {'stu': student})
 
-
+@login_required(login_url='hostelapp:login')
 def update_profile(request, pk):
     if request.method == 'POST':
         stu = Student.objects.get(id=pk)
