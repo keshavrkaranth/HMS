@@ -270,7 +270,7 @@ def warden_resolve(request, pk):
     room.save()
     return redirect('hostelapp:roomgrivelences')
 
-@login_required(login_url='hostelapp:login')
+
 def feedback(request):
     feed = Feedback.objects.order_by('rating')
     form = LoginForm()
